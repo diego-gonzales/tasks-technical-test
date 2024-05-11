@@ -1,1 +1,50 @@
-<p>login works!</p>
+<form
+	class="row justify-content-center align-items-center form-height mx-auto"
+	[formGroup]="loginForm"
+	(ngSubmit)="onSubmit()"
+>
+	<fieldset>
+		<section class="row justify-content-center align-items-center">
+			<legend class="text-uppercase text-center">Login</legend>
+			<div class="col-12 col-sm-4">
+				<div class="mb-3">
+					<label for="username" class="form-label">Username</label>
+					<input
+						type="text"
+						class="form-control"
+						id="username"
+						placeholder="e.g user01"
+						formControlName="username"
+					/>
+					<div
+						class="invalid-feedback"
+						[ngClass]="{ 'd-block': formControlIsInvalid('username') }"
+					>
+						Username is required.
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="password" class="form-label">Password</label>
+					<input
+						type="password"
+						id="password"
+						class="form-control"
+						formControlName="password"
+					/>
+					<div
+						id="password"
+						[ngClass]="{ 'd-block': formControlIsInvalid('password') }"
+						class="invalid-feedback"
+					>
+						{{ getPasswordControlErrorMessage() }}
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-2 d-grid">
+				<button type="submit" class="btn btn-primary">Enter</button>
+			</div>
+		</section>
+	</fieldset>
+</form>

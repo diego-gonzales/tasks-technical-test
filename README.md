@@ -1,7 +1,5 @@
 # TasksApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.5.
-
 ## Installation
 
 Run `npm install` to install all the dependencies.
@@ -17,7 +15,3 @@ Run `npm run lint` to lint the project with eslint.
 ## Formatting
 
 Run `npm run format` to format the project with prettier.
-
-## Build
-
-Run `ng build` to build the project.
