@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 	templateUrl: './login.component.html',
 	styles: `
 		.form-height {
-			min-height: calc(100vh - 56px);
+			min-height: calc(100vh - 120px);
 		}
 	`
 })
