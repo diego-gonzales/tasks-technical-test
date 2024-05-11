@@ -14,6 +14,7 @@ export class NavbarComponent {
 	private _storeService = inject(StoreService);
 	private _authService = inject(AuthService);
 	loggedInUser = this._storeService.loggedInUser;
+	headerTitle = this._storeService.headerTitle;
 
 	logout() {
 		this._authService.logout();
