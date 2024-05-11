@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TasksService } from '@services/tasks.service';
+import { REGEX_TASK } from '../../../constants';
 
 @Component({
 	selector: 'app-task-input',
@@ -12,7 +13,7 @@ import { TasksService } from '@services/tasks.service';
 })
 export class TaskInputComponent {
 	private _tasksService = inject(TasksService);
-	taskControl = new FormControl('', Validators.pattern(/^[a-zA-Z0-9\s]+$/));
+	taskControl = new FormControl('', Validators.pattern(REGEX_TASK));
 
 	addTask() {
 		const controlValue = this.taskControl.value?.trim();

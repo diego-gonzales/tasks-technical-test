@@ -1,0 +1,12 @@
+<nav class="navbar bg-primary" data-bs-theme="dark">
+	<div class="container-fluid">
+		<a class="navbar-brand text-uppercase" routerLink="/">Tasks App</a>
+
+		<section class="d-flex align-items-center gap-2">
+			<div class="text-white">
+				{{ loggedInUser()?.username }}
+			</div>
+			<button class="btn btn-light btn-sm" (click)="logout()">Logout</button>
+		</section>
+	</div>
+</nav>

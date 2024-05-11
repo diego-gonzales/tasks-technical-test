@@ -1,30 +1,31 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginCredentials } from '@models/login-credentials.interface';
-import { of } from 'rxjs';
+import { USER_KEY, VALID_USER } from '../constants';
+import { StoreService } from './store.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthService {
 	private _router = inject(Router);
-	private _validUser = signal<LoginCredentials>({
-		username: 'test01',
-		password: 'test01'
-	});
+	private _storeService = inject(StoreService);
 
 	login(credentials: LoginCredentials) {
 		const { username, password } = credentials;
 
-		if (username === this._validUser().username && password === this._validUser().password) {
-			this._redirectToTasksPage();
-			return of(true);
+		if (username === VALID_USER.username && password === VALID_USER.password) {
+			this._storeService.setLoggedInUser(credentials);
+			this._router.navigateByUrl('/tasks');
+			return true;
 		}
 
-		return of(false);
+		return false;
 	}
 
-	private _redirectToTasksPage(): void {
-		this._router.navigateByUrl('/tasks');
+	logout() {
+		localStorage.removeItem(USER_KEY);
+		this._storeService.setLoggedInUser(null);
+		this._router.navigateByUrl('/login');
 	}
 }
