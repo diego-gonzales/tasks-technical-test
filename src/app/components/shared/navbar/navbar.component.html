@@ -8,7 +8,10 @@
 			<div class="text-white">
 				{{ loggedInUser()?.username }}
 			</div>
-			<button class="btn btn-light btn-sm" (click)="logout()">Logout</button>
+
+			@if (loggedInUser()) {
+				<button class="btn btn-light btn-sm" (click)="logout()">Logout</button>
+			}
 		</section>
 	</div>
 </nav>
