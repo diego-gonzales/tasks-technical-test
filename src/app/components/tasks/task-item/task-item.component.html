@@ -8,9 +8,15 @@
 			[checked]="task().isDone"
 			(change)="onInputChange($event)"
 		/>
-		<label class="form-check-label" [for]="task().id">
-			{{ task().title }}
-		</label>
+		@if (!taskIsDone()) {
+			<label class="form-check-label" [for]="task().id">
+				{{ task().title }}
+			</label>
+		} @else {
+			<label class="form-check-label" [for]="task().id">
+				<s>{{ task().title }}</s>
+			</label>
+		}
 	</div>
 
 	@if (!taskIsDone()) {

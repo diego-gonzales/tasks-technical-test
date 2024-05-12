@@ -14,7 +14,7 @@ export class TasksService {
 			isDone: false
 		};
 
-		this._tasks.update((tasks) => [...tasks, newTask]);
+		this._tasks.update((tasks) => [newTask, ...tasks]);
 	}
 
 	updateTaskStatus(taskId: string, isDone: boolean) {
