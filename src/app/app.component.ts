@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
 	ActivatedRoute,
 	NavigationEnd,
 	Router,
 	RouterLink,
-	RouterOutlet
+	RouterOutlet,
+	TitleStrategy
 } from '@angular/router';
 import { NavbarComponent } from '@components/shared/navbar/navbar.component';
 import { StoreService } from '@services/store.service';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-root',
@@ -18,9 +19,10 @@ import { filter, takeUntil } from 'rxjs/operators';
 	templateUrl: './app.component.html',
 	styles: []
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
 	private _router = inject(Router);
 	private _activatedRoute = inject(ActivatedRoute);
+	private _titleStrategy = inject(TitleStrategy);
 	private _storeService = inject(StoreService);
 
 	destroy$ = new Subject<boolean>();
@@ -29,25 +31,25 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.getRouteTitle();
 	}
 
-	ngOnDestroy(): void {
-		this.destroy$.next(true);
-		this.destroy$.complete();
-	}
-
 	getRouteTitle() {
 		this._router.events
-			.pipe(
-				filter((event) => event instanceof NavigationEnd),
-				takeUntil(this.destroy$)
-			)
+			.pipe(filter((event) => event instanceof NavigationEnd))
 			.subscribe(() => {
-				while (this._activatedRoute.firstChild) {
-					this._activatedRoute = this._activatedRoute.firstChild;
-				}
+				const activatedRoute = this._getChild(this._activatedRoute);
 
-				this._storeService.setHeaderTitle(
-					this._activatedRoute.routeConfig?.title?.toString() || 'Tasks App'
+				const currentTitle = this._titleStrategy.getResolvedTitleForRoute(
+					activatedRoute.snapshot
 				);
+
+				this._storeService.setHeaderTitle(currentTitle);
 			});
+	}
+
+	private _getChild(activatedRoute: ActivatedRoute): ActivatedRoute {
+		if (activatedRoute.firstChild) {
+			return this._getChild(activatedRoute.firstChild);
+		}
+
+		return activatedRoute;
 	}
 }
