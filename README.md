@@ -1,4 +1,4 @@
-# TasksApp
+# TasksApp - Diego Gonzales
 
 ## Installation
 
